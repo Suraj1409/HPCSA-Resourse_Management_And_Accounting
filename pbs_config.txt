@@ -1,0 +1,49 @@
+###If you are installing PBS on only one system, 
+you should change the value of PBS_START_MOM from zero to one
+
+[root@pbs ~]# cat /etc/pbs.conf
+PBS_EXEC=/opt/pbs
+PBS_SERVER=pbs
+PBS_START_SERVER=1
+PBS_START_SCHED=1
+PBS_START_COMM=1
+PBS_START_MOM=0
+PBS_HOME=/var/spool/pbs
+PBS_CORE_LIMIT=unlimited
+PBS_SCP=/bin/scp
+---------------------------------------------------
+
+chmod 4755 /opt/pbs/sbin/pbs_iff /opt/pbs/sbin/pbs_rcp
+systemctl restart pbs
+
+. /etc/profile.d/pbs.sh  OR use source command to add pbs binaries location to your shell
+
+------------------------client config on master node---
+
+vi /var/spool/pbs/server_priv/nodes     <<<<<<<<<<<<<<<<< create nodes file and add below entry
+
+pbsnode np=1
+
+
+# qmgr -c “create node pbsnode”
+
+#. /etc/profile.d/pbs.sh
+
+
+# pbsnodes -a
+
+---------------------------------------------------
+--------Adding node-------client conf on client node----
+[root@pbsnode x86_64]# cat /etc/pbs.conf
+PBS_EXEC=/opt/pbs
+PBS_SERVER=pbs
+PBS_START_SERVER=0
+PBS_START_SCHED=0
+PBS_START_COMM=0
+PBS_START_MOM=1
+PBS_HOME=/var/spool/pbs
+PBS_CORE_LIMIT=unlimited
+PBS_SCP=/bin/scp
+
+
+systemctl restart pbs

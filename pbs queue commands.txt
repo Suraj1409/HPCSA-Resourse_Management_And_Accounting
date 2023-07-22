@@ -1,0 +1,48 @@
+To check pbs server configuration
+
+
+How To Create The Qsub Queue:
+qmgr -c it is used to execute the single command.
+So run the following command
+# qmgr -c "set server scheduling=true"
+# qmgr -c "create queue batch queue_type=execution"
+# qmgr -c "set queue batch started=true"
+# qmgr -c "set queue batch enabled=true"
+# qmgr -c "set queue batch resources_default.nodes=1"q
+# qmgr -c "set queue batch resources_default.walltime=3600"
+# qmgr -c "set server default_queue=batch"
+
+
+Default queue Configuration output
+# create queue workq
+# set queue workq queue_type = Execution
+# set queue workq enabled = True
+# set queue workq started = True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+qmgr -c "set queue dqueue acl_user_enable = True"          <<<<<<<<<<<<<<< set user acl for queue
+qmgr -c "set queue dqueue acl_users = user1,user2"   <<<<<<<<<<<<<<<< to add user in queue
+You may use the "acl_user_enable = True" with "acl_users = user1,user2" attribute to enable user access control for the queue.
